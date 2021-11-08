@@ -1,0 +1,64 @@
+<canvas id='mycanvas' width=600 height=600>
+<script>
+	
+	function polygon(a, colorBorde, colorRelleno, grosor) { 
+	ctx.beginPath()
+	ctx.strokeStyle = colorBorde
+	ctx.fillStyle = colorRelleno
+	ctx.lineWidth = grosor;
+	ctx.moveTo(a[0],a[1])
+	for (i=2; i < a.length; i+=2)
+	ctx.lineTo(a[i],a[i+1]);
+	ctx.closePath()
+	ctx.stroke()
+	ctx.fill()
+}
+
+	function SumaT(a,b){
+	var s = [];
+	for (i=0; i < a.length; i+=2){
+	s[i]=(a[i]+b[0])
+	s[i+1]=(a[i+1]+b[1])
+    }
+	return s;
+}
+
+	function RestaT(a,b){
+	var s = [];
+	for (i=0; i < a.length; i+=2){
+	s[i]=(a[i]-b[0])
+	s[i+1]=(a[i+1]-b[1])
+    }
+	return s;
+}
+
+	function rotaobj(a,r){
+	var s = [];
+	var m= [Math.cos(r), -Math.sin(r),Math.sin(r), Math.cos(r)]
+	for (i=0; i < a.length; i+=2){
+	s[i]=(a[i]*m[0]+a[i+1]*m[1])
+	s[i+1]=(a[i]*m[2]+a[i+1]*m[3])
+    }
+	return s;
+}
+
+	var canvas = document.getElementById('mycanvas')
+	var ctx = canvas.getContext('2d');
+	
+	var LetraI = [26, 26, 66, 26, 83, 90, 97, 26, 138, 26, 138, 118, 111, 118, 111, 47, 93, 118, 68, 118, 50, 47, 50, 118, 26, 118];
+
+	var rot = 75;
+
+	var vec_tran = [73,80];
+
+	var LetraI_centr = RestaT(LetraI, vec_tran)
+
+	var LetraI_rot_cent = rotaobj(LetraI_centr, rot)
+
+	var LetraI_rot = SumaT(LetraI_rot_cent, vec_tran)
+	
+	polygon(LetraI, 'yellow','red', 4)
+	
+	polygon(LetraI_rot, 'red','yellow', 4)
+	
+</script>
